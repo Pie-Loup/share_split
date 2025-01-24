@@ -41,6 +41,8 @@ To simplify secret sharing, the prime mod is fixed to the Mersen number 2203 so 
 - Only one passphrase for all shares
 - No iteration on required shares that could simplify the rebuilding of the seed (no need to remember this)
 - QR code generated may be too large for a small screen
+- No "share rebuilding". If a share is lost, you have to rebuild the seed and then rebuild the shares.
 
 ### Warning
-Showing/storing enough shares on the same place not encrypted is akin to showing your seed! Just don't do it.
+- Showing/storing enough shares on the same place not encrypted is akin to showing your seed! Just don't do it.
+- **Set of shares generated are not necessarily compatible with one another! This means if you loose one share and want to redistribute it, you have to regenerate all the shares at once from the seed and distribute those. You can delete the previous ones. If you don't know the seed, then collect the shares, build the seed and rebuild the shares**
