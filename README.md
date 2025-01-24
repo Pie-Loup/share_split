@@ -38,6 +38,7 @@ You can receive an encrypted share. Use this option to decrypt the share and sto
 To simplify secret sharing, the prime mod is fixed to the Mersen number 2203 so that you don't have to store yet another number. If your seed phrase is too large, you can increase or remove the prime mod input, but be sure to remember it when decrypting!
 
 ### Limitations
+- No way to know if the seed entered it the correct one. Need to implement a public key/address generation to double check
 - Only one passphrase for all shares
 - No iteration on required shares that could simplify the rebuilding of the seed (no need to remember this)
 - QR code generated may be too large for a small screen
