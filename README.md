@@ -8,6 +8,8 @@ It is a fork of the [following repository](https://github.com/jqueiroz/python-ss
 ### Overview
 For the mathematical details, check the source repo. This repo focuses on a practical implementation for spliting seed to shares in order to securely store seeds.
 
+Make sure to have python installed, tested on 3.10.14
+Install requirements: `pip install -r requirements.txt`
 Run `main.py` and follow the instructions!
 
 You can:
