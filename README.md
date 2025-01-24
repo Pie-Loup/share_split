@@ -8,7 +8,7 @@ It is a fork of the [following repository](https://github.com/jqueiroz/python-ss
 ### Overview
 For the mathematical details, check the source repo. This repo focuses on a practical implementation for spliting seed to shares in order to securely store seeds.
 
-Run main.py and follow the instructions!
+Run `main.py` and follow the instructions!
 
 You can:
 - Build shares from a seed or rebuild the seed from shares.
