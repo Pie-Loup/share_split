@@ -2,7 +2,7 @@ from sss_helper import get_key_choice, secure_clear, show_qr_code
 from manage_seed import create_share_from_seed, rebuild_seed_from_shares
 from protect_share import encrypt, decrypt
 import getpass
-
+from seed import show_public_addresses
 
 class InvalidTag(Exception):
     pass
@@ -11,11 +11,17 @@ print("Hello there. What do you want to do?")
 print("1. Create shares from a seed phrase")
 print("2. Rebuild a seed phrase from shares")
 print("3. Decrypt a share protected with a password")
-action = get_key_choice(['1'], ['2'], ['3'])
+print("4. Encrypt a share to protect it with a password")
+action = get_key_choice(['1'], ['2'], ['3'], ['4'])
 if action == 1:
     seed_phrase = getpass.getpass("Enter seed phrase, then press Enter: ")
     required_shares = int(input("Enter the number of shares required to reconstruct the seed: "))
     total_shares = int(input("Enter the total number of shares: "))
+
+    print("Do you want to show the corresponding public addresses? (y/n)")
+    result_verify = get_key_choice(['y'], ['n'])
+    if result_verify == 1:
+        show_public_addresses(seed_phrase)
 
     shares = create_share_from_seed(seed_phrase, required_shares, total_shares)
 
@@ -74,23 +80,35 @@ elif action == 2:
                 exit(1)
     else:
         decrypted_shares = input_shares
-    required_shares = int(input("Enter the number of shares required to rebuild the seed: "))
-    max_shares = input("Enter the maximum number of shares to use, leave empty if you don't know: ")
-    max_shares = int(max_shares if max_shares != '' else 10)
 
-    recovered_secret = rebuild_seed_from_shares(decrypted_shares, required_shares, max_shares)
-    print("Do you want to show the secret? (y/n)")
-    result_secret = get_key_choice(['y'], ['n'])
-    if result_secret == 1:
-        print(recovered_secret)
-    print("Press any key to flush the terminal")
+    recovered_secret = rebuild_seed_from_shares(decrypted_shares, len(decrypted_shares), 15)
+    if recovered_secret is not None:
+        print("Do you want to show the secret? (y/n)")
+        result_secret = get_key_choice(['y'], ['n'])
+        if result_secret == 1:
+            print(recovered_secret)
+        print("Press any key to flush the terminal")
+    else:
+        print("Make sure you have entered enough shares and that all the shares are from the same set")
+
+
     get_key_choice()
     secure_clear()
+
 elif action == 3:
     encrypted_share = input("Enter the encrypted share: ")
     password = getpass.getpass("Enter password to decrypt the share: ")
-    decrypted_share = (password, encrypted_share)
+    decrypted_share = decrypt(password, encrypted_share)
     print(f"Decrypted share: {decrypted_share}")
+    print("Press any key to flush the terminal")
+    get_key_choice()
+    secure_clear()
+
+elif action == 4:
+    clear_share = input("Enter the clear share: ")
+    password = getpass.getpass("Enter password to encrypt the share: ")
+    encrypted_share = encrypt(password, clear_share)
+    print(f"Encrypted share: {encrypted_share}")
     print("Press any key to flush the terminal")
     get_key_choice()
     secure_clear()
