@@ -10,8 +10,8 @@ class InvalidTag(Exception):
 print("Hello there. What do you want to do?")
 print("1. Create shares from a seed phrase")
 print("2. Rebuild a seed phrase from shares")
-print("3. Encrypt a share protected with a password")
-print("4. Decrypt a share to protect it with a password")
+print("3. Decrypt a share protected with a password")
+print("4. Encrypt a share to protect it with a password")
 action = get_key_choice(['1'], ['2'], ['3'], ['4'])
 if action == 1:
     seed_phrase = getpass.getpass("Enter seed phrase, then press Enter: ")
